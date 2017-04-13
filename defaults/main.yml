@@ -17,6 +17,9 @@ dehydrated_contactmail:     ""
 dehydrated_lockfile:        "{{dehydrated_basedir}}/lock"
 dehydrated_ocspstaple:      "no"
 
+# Update git checkout
+dehydrated_updategit:       "true"
+
 # Create weekly cronjob to check and update certificates
 dehydrated_cronjob:         "true"
 

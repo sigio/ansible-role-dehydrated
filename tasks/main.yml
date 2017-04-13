@@ -1,7 +1,7 @@
 ---
 
 - name: Checkout git repository for dehydrated
-  git: repo=https://github.com/lukas2511/dehydrated.git dest={{dehydrated_basedir}} update=yes
+  git: repo=https://github.com/lukas2511/dehydrated.git dest={{dehydrated_basedir}} update={{dehydrated_updategit}}
 
 - name: Create dehydrated directories
   file: state=directory path={{item}}
