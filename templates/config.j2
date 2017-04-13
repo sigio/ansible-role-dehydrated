@@ -1,0 +1,21 @@
+# {{ ansible_managed }}
+
+CA="https://acme-v01.api.letsencrypt.org/directory"
+CA_TERMS="https://acme-v01.api.letsencrypt.org/terms"
+CHALLENGETYPE="{{dehydrated_challengetype}}"
+BASEDIR="{{dehydrated_basedir}}"
+CONFIG_D="{{dehydrated_configdir}}"
+DOMAINS_TXT="{{dehydrated_domainstxt}}"
+CERTDIR="{{dehydrated_certsdir}}"
+ACCOUNTDIR="{{dehydrated_accountsdir}}"
+WELLKNOWN="{{dehydrated_wellknown}}"
+KEYSIZE="{{dehydrated_keysize}}"
+HOOK=
+HOOK_CHAIN="no"
+RENEW_DAYS="{{dehydrated_renewdays}}"
+PRIVATE_KEY_RENEW="{{dehydrated_privkeyrenew}}"
+PRIVATE_KEY_ROLLOVER="{{dehydrated_privkeyrollover}}"
+KEY_ALGO="{{dehydrated_keyalgo}}"
+CONTACT_EMAIL="{{dehydrated_contactmail}}"
+LOCKFILE="{{dehydrated_lockfile}}"
+OCSP_MUST_STAPLE="{{dehydrated_ocspstaple}}"
