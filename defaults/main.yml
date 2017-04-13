@@ -1,5 +1,6 @@
 ---
 
+# Config settings for dehydrated
 dehydrated_basedir:         "/etc/dehydrated"
 dehydrated_challengetype:   "http-01"
 dehydrated_configdir:       "{{dehydrated_basedir}}/config.d"
@@ -16,9 +17,17 @@ dehydrated_contactmail:     ""
 dehydrated_lockfile:        "{{dehydrated_basedir}}/lock"
 dehydrated_ocspstaple:      "no"
 
+# Create weekly cronjob to check and update certificates
+dehydrated_cronjob:         "true"
+
+# Which service(s) to reload when updating certs
+dehydrated_reload_services:
+  - "apache2"
+
 # Apache2 support
 dehydrated_apache2dir:      "/etc/apache2"
 # Put apache2 config-file for .well-known/acme-challange handling in place
 dehydrated_apache2:         "false"
 # And enable this config
 dehydrated_apache2_enable:  "false"
+

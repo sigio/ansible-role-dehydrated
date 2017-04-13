@@ -1,0 +1,7 @@
+#!/bin/sh
+# {{ ansible_managed }}
+
+{{dehydrated_basedir}}/dehydrated --cron > /tmp/update-certs.log 2>&1 || ( \
+{% for service in dehydrated_reload_services %}
+service {{ service }} reload;
+{% endfor %} )
