@@ -24,7 +24,7 @@ create_privcert_pem() {
  
   if [ "deploy_cert" = "$1" ] ; then
     echo " + $0 Creating privcert.pem for haproxy / lighttpd..."
-    cat "$3" "$4" dh2048.pem > "${CERTDIR}/${domain}/privcert-${timestamp}.pem"
+    cat "$3" "$5" dh2048.pem > "${CERTDIR}/${domain}/privcert-${timestamp}.pem"
     ln -sf "privcert-${timestamp}.pem" "${CERTDIR}/${domain}/privcert.pem"
     ln -sf "${CERTDIR}/${domain}/privcert.pem" "${CERTDIR}/current/${domain}.pem"
   fi
