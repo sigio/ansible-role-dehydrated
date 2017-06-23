@@ -12,6 +12,8 @@ Role Variables
 See the defaults/main.yml file for all variables that are being used, overrule the defaults
 in your host or group_vars
 
+dehydrated_run_once:    Set this to true to only run and configure dehydrated on a single node, usefull when config and certificates are stored on a shared filesystem.
+
 Dependencies
 ------------
 

@@ -2,6 +2,7 @@
 
 - name: Checkout git repository for dehydrated
   git: repo=https://github.com/lukas2511/dehydrated.git dest={{dehydrated_basedir}} update={{dehydrated_updategit}}
+  run_once: "{{dehydrated_run_once}}"
   tags:
     - dehydrated
     - dehydrated-git
@@ -14,6 +15,7 @@
     - "{{dehydrated_certsdir}}"
     - "{{dehydrated_accountsdir}}"
     - "{{dehydrated_wellknown}}"
+  run_once: "{{dehydrated_run_once}}"
   tags:
     - dehydrated
     - dehydrated-dirs
@@ -23,6 +25,7 @@
   with_items:
     - config
     - domains.txt
+  run_once: "{{dehydrated_run_once}}"
   tags:
     - dehydrated
     - dehydrated-domains.txt
@@ -30,12 +33,14 @@
 - name: Create local.sh config file
   file: state=touch path="{{dehydrated_configdir}}/local.sh" mode=0755
   changed_when: false
+  run_once: "{{dehydrated_run_once}}"
   tags:
     - dehydrated
     - dehydrated-local
 
 - name: Create account key and accept terms
   command: creates="{{dehydrated_accountsdir}}/*/account_key.pem" {{dehydrated_basedir}}/dehydrated --register --accept-terms
+  run_once: "{{dehydrated_run_once}}"
   tags:
     - dehydrated
     - dehydrated-account
@@ -43,6 +48,7 @@
 - name: Enable cronjob for dehydrated
   template: src="cronjob" dest="/etc/cron.weekly/dehydrated" owner=root group=root mode=0755
   when: dehydrated_cronjob|bool
+  run_once: "{{dehydrated_run_once}}"
   tags:
     - dehydrated
     - dehydrated-cron
@@ -50,6 +56,7 @@
 - name: Create apache 2 config file
   template: src="dehydrated.conf" dest="{{dehydrated_apache2dir}}/conf-available/dehydrated.conf" owner=root group=root mode=0644
   when: dehydrated_apache2|bool
+  run_once: "{{dehydrated_run_once}}"
   tags:
     - dehydrated
     - dehydrated-apache2
@@ -57,6 +64,7 @@
 - name: Enable apache2 config
   file: state=link src="{{dehydrated_apache2dir}}/conf-available/dehydrated.conf" dest="{{dehydrated_apache2dir}}/conf-enabled/dehydrated.conf"
   when: dehydrated_apache2_enable|bool
+  run_once: "{{dehydrated_run_once}}"
   tags:
     - dehydrated
     - dehydrated-apache2

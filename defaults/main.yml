@@ -16,6 +16,7 @@ dehydrated_keyalgo:         "rsa"
 dehydrated_contactmail:     ""
 dehydrated_lockfile:        "{{dehydrated_basedir}}/lock"
 dehydrated_ocspstaple:      "no"
+dehydrated_run_once:        "false"
 
 # Update git checkout
 dehydrated_updategit:       "true"
