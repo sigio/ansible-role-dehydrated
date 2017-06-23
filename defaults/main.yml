@@ -2,6 +2,7 @@
 
 # Config settings for dehydrated
 dehydrated_basedir:         "/etc/dehydrated"
+dehydrated_ca_url:          "https://acme-v01.api.letsencrypt.org/directory"
 dehydrated_challengetype:   "http-01"
 dehydrated_configdir:       "{{dehydrated_basedir}}/config.d"
 dehydrated_domainstxt:      "{{dehydrated_basedir}}/domains.txt"
@@ -34,4 +35,3 @@ dehydrated_apache2dir:      "/etc/apache2"
 dehydrated_apache2:         "false"
 # And enable this config
 dehydrated_apache2_enable:  "false"
-

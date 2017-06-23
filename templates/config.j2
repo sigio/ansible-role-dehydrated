@@ -1,6 +1,6 @@
 # {{ ansible_managed }}
 
-CA="https://acme-v01.api.letsencrypt.org/directory"
+CA="{{dehydrated_ca_url}}"
 CA_TERMS="https://acme-v01.api.letsencrypt.org/terms"
 CHALLENGETYPE="{{dehydrated_challengetype}}"
 BASEDIR="{{dehydrated_basedir}}"
