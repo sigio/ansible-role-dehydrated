@@ -2,6 +2,8 @@
 
 dehydrated_basedir:         "/etc/dehydrated"
 dehydrated_challengetype:   "http-01"
+dehydrated_ca_url:          "https://acme-v01.api.letsencrypt.org/directory"
+dehydrated_ca_terms:        "https://acme-v01.api.letsencrypt.org/terms"
 dehydrated_configdir:       "{{dehydrated_basedir}}/config.d"
 dehydrated_domainstxt:      "{{dehydrated_basedir}}/domains.txt"
 dehydrated_certsdir:        "{{dehydrated_basedir}}/certs"
