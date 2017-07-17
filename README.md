@@ -5,6 +5,7 @@ Requirements
 ------------
 
 Current Debian or Ubuntu system, optionally apache2 installed
+It will also work with other distributions or systems, as long as the dehydrated_apache2_enable setting remains 'false'
 
 Role Variables
 --------------
