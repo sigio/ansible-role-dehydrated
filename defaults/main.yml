@@ -1,5 +1,6 @@
 ---
 
+# Config settings for dehydrated
 dehydrated_basedir:         "/etc/dehydrated"
 dehydrated_challengetype:   "http-01"
 dehydrated_ca_url:          "https://acme-v01.api.letsencrypt.org/directory"
@@ -17,6 +18,17 @@ dehydrated_keyalgo:         "rsa"
 dehydrated_contactmail:     ""
 dehydrated_lockfile:        "{{dehydrated_basedir}}/lock"
 dehydrated_ocspstaple:      "no"
+dehydrated_run_once:        "false"
+
+# Update git checkout
+dehydrated_updategit:       "true"
+
+# Create weekly cronjob to check and update certificates
+dehydrated_cronjob:         "true"
+
+# Which service(s) to reload when updating certs
+dehydrated_reload_services:
+  - "apache2"
 
 # Apache2 support
 dehydrated_apache2dir:      "/etc/apache2"
@@ -24,3 +36,4 @@ dehydrated_apache2dir:      "/etc/apache2"
 dehydrated_apache2:         "false"
 # And enable this config
 dehydrated_apache2_enable:  "false"
+

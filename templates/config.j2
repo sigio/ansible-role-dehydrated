@@ -10,7 +10,6 @@ CERTDIR="{{dehydrated_certsdir}}"
 ACCOUNTDIR="{{dehydrated_accountsdir}}"
 WELLKNOWN="{{dehydrated_wellknown}}"
 KEYSIZE="{{dehydrated_keysize}}"
-HOOK=
 HOOK_CHAIN="no"
 RENEW_DAYS="{{dehydrated_renewdays}}"
 PRIVATE_KEY_RENEW="{{dehydrated_privkeyrenew}}"
@@ -19,3 +18,17 @@ KEY_ALGO="{{dehydrated_keyalgo}}"
 CONTACT_EMAIL="{{dehydrated_contactmail}}"
 LOCKFILE="{{dehydrated_lockfile}}"
 OCSP_MUST_STAPLE="{{dehydrated_ocspstaple}}"
+
+create_privcert_pem() {
+  echo "  $0 $@"
+ 
+  if [ "deploy_cert" = "$1" ] ; then
+    echo " + $0 Creating privcert.pem for haproxy / lighttpd..."
+    cat "$3" "$5" dh2048.pem > "${CERTDIR}/${domain}/privcert-${timestamp}.pem"
+    ln -sf "privcert-${timestamp}.pem" "${CERTDIR}/${domain}/privcert.pem"
+    ln -sf "${CERTDIR}/${domain}/privcert.pem" "${CERTDIR}/current/${domain}.pem"
+  fi
+}
+ 
+HOOK=create_privcert_pem
+
