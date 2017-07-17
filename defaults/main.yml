@@ -19,6 +19,7 @@ dehydrated_contactmail:     ""
 dehydrated_lockfile:        "{{dehydrated_basedir}}/lock"
 dehydrated_ocspstaple:      "no"
 dehydrated_run_once:        "false"
+dehydrated_updatelog:       "/var/log/dehydrated.log"
 
 # Update git checkout
 dehydrated_updategit:       "true"
