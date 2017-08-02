@@ -22,7 +22,7 @@ OCSP_MUST_STAPLE="{{dehydrated_ocspstaple}}"
 create_privcert_pem() {
   echo "  $0 $@"
  
-  if [ "deploy_cert" = "$1" ] ; then
+  if [ "deploy_cert" = "$1" -a -e "dh2048.pem" ] ; then
     echo " + $0 Creating privcert.pem for haproxy / lighttpd..."
     cat "$3" "$5" dh2048.pem > "${CERTDIR}/${domain}/privcert-${timestamp}.pem"
     ln -sf "privcert-${timestamp}.pem" "${CERTDIR}/${domain}/privcert.pem"
