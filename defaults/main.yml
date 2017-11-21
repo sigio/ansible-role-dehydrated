@@ -24,7 +24,9 @@ dehydrated_updatelog:       "/var/log/dehydrated.log"
 # Update git checkout
 dehydrated_updategit:       "true"
 
-# Create weekly cronjob to check and update certificates
+# Create cronjob to check and update certificates
+# See: https://docs.ansible.com/ansible/latest/cron_module.html `special_time`for availbale frequencies
+dehydrated_cronjob_frequency:   "weekly"
 dehydrated_cronjob:         "true"
 
 # Which service(s) to reload when updating certs
@@ -37,4 +39,3 @@ dehydrated_apache2dir:      "/etc/apache2"
 dehydrated_apache2:         "false"
 # And enable this config
 dehydrated_apache2_enable:  "false"
-

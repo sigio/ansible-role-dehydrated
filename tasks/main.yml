@@ -46,7 +46,12 @@
     - dehydrated-account
 
 - name: Enable cronjob for dehydrated
-  template: src="cronjob" dest="/etc/cron.weekly/dehydrated" owner=root group=root mode=0755
+  cron:
+    name: "dehydrated"
+    special_time: "{{ dehydrated_cronjob_frequency }}"
+    job: >-
+        "{{dehydrated_basedir}}/dehydrated --cron > {{dehydrated_updatelog}} 2>&1
+        && {% for service in dehydrated_reload_services %}service {{ service }} reload;{% endfor %}"
   when: dehydrated_cronjob|bool
   run_once: "{{dehydrated_run_once}}"
   tags:
