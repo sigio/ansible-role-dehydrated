@@ -13,6 +13,7 @@
     - "{{dehydrated_basedir}}"
     - "{{dehydrated_configdir}}"
     - "{{dehydrated_certsdir}}"
+    - "{{dehydrated_certsdir}}/current"
     - "{{dehydrated_accountsdir}}"
     - "{{dehydrated_wellknown}}"
   run_once: "{{dehydrated_run_once}}"
