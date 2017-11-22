@@ -21,7 +21,7 @@
     - dehydrated-dirs
 
 - name: Template dehydrated config files
-  template: src="{{item}}.j2" dest="{{dehydrated_configdir}}/{{item}}" owner=root group=root
+  template: src="{{item}}.j2" dest="{{dehydrated_basedir}}/{{item}}" owner=root group=root
   with_items:
     - config
     - domains.txt
