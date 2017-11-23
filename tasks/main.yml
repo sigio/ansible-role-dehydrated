@@ -48,6 +48,8 @@
 - name: Enable cronjob for dehydrated
   cron:
     name: "dehydrated"
+    user: root
+    cron_file: dehydrated
     special_time: "{{ dehydrated_cronjob_frequency }}"
     job: >-
         "{{dehydrated_basedir}}/dehydrated --cron > {{dehydrated_updatelog}} 2>&1
