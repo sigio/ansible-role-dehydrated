@@ -1,5 +1,14 @@
 ---
 
+- name: Install required binary packages
+  apt: name={{item}} state=installed update_cache=yes
+  with_items:
+    - git
+    - curl
+  tags:
+    - dehydrated
+    - dehydrated-packages
+
 - name: Checkout git repository for dehydrated
   git: repo=https://github.com/lukas2511/dehydrated.git dest={{dehydrated_basedir}} update={{dehydrated_updategit}}
   run_once: "{{dehydrated_run_once}}"
