@@ -114,7 +114,7 @@
 - name: Include 'apache' tasks
   include_tasks: apache.yml
   when:
-    - dehydrated_apache|bool
+    - dehydrated_apache2|bool
 
 - name: Include 'nginx' tasks
   include_tasks: nginx.yml
