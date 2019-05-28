@@ -11,9 +11,8 @@
 
 - name: Install dehydrated package (debian)
   apt:
-    name: "{{item}}"
     state: present
-  with_items:
+    pkg:
     - dehydrated
   run_once: "{{dehydrated_run_once}}"
   tags:
