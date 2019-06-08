@@ -1,7 +1,11 @@
 ---
 
 - name: Checkout git repository for dehydrated
-  git: repo=https://github.com/lukas2511/dehydrated.git dest={{dehydrated_basedir}} update={{dehydrated_updategit}}
+  git:
+    repo: https://github.com/lukas2511/dehydrated.git
+    dest: "{{dehydrated_basedir}}"
+    update: "{{dehydrated_updategit}}"
+    version: "{{dehydrated_commit|default('HEAD')}}"
   run_once: "{{dehydrated_run_once}}"
   tags:
     - dehydrated
