@@ -22,6 +22,19 @@
     - dehydrated_version == 'package'
     - ansible_os_family == 'Debian'
 
+- name: Install dehydrated package (redhat)
+  yum:
+    state: present
+    pkg:
+    - dehydrated
+  run_once: "{{dehydrated_run_once}}"
+  tags:
+    - dehydrated
+    - dehydrated-yum
+  when:
+    - dehydrated_version == 'package'
+    - ansible_os_family == 'RedHat'
+
 - name: Create dehydrated directories
   file:
     state: directory
