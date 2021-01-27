@@ -41,8 +41,8 @@
     path: "{{item.path}}"
     mode: "{{item.mode|default('0700')}}"
   with_items:
-    - { path: "{{dehydrated_etcdir}}" }
-    - { path: "{{dehydrated_basedir}}", mode: "0755" }
+    - { path: "{{dehydrated_etcdir}}", mode: "0711" }
+    - { path: "{{dehydrated_basedir}}", mode: "0711" }
     - { path: "{{dehydrated_configdir}}" }
     - { path: "{{dehydrated_certsdir}}" }
     - { path: "{{dehydrated_certsdir}}/current" }
