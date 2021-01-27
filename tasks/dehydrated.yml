@@ -98,7 +98,7 @@
     - dehydrated
     - dehydrated_local
 
-- name: Create account key and accept terms
+- name: Create account key and accept terms (git version)
   command: "{{dehydrated_basedir}}/dehydrated --register --accept-terms"
   args:
     creates: "{{dehydrated_accountsdir}}/*/account_key.pem"
@@ -108,6 +108,17 @@
     - dehydrated-account
   when:
     - dehydrated_version == 'git'
+
+- name: Create account key and accept terms (package version)
+  command: "dehydrated --register --accept-terms"
+  args:
+    creates: "{{dehydrated_accountsdir}}/*/account_key.pem"
+  run_once: "{{dehydrated_run_once}}"
+  tags:
+    - dehydrated
+    - dehydrated-account
+  when:
+    - dehydrated_version == 'package'
 
 - name: Enable cronjob for dehydrated
   template:
