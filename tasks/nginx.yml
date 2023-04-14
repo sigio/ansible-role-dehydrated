@@ -3,13 +3,13 @@
 - name: Template nginx site-config
   ansible.builtin.template:
     src: "nginx-default.j2"
-    dest: "{{dehydrated_nginxdir}}/sites-available/default"
+    dest: "{{ dehydrated_nginxdir }}/sites-available/default"
     owner: root
     group: root
     mode: "0644"
   when:
-    - dehydrated_nginx|bool
-  run_once: "{{dehydrated_run_once}}"
+    - dehydrated_nginx | bool
+  run_once: "{{ dehydrated_run_once }}"
   tags:
     - dehydrated
     - dehydrated-nginx
@@ -17,11 +17,11 @@
 - name: Enable nginx default site
   ansible.builtin.file:
     state: "link"
-    src: "{{dehydrated_nginxdir}}/sites-available/default"
-    dest: "{{dehydrated_nginxdir}}/sites-enabled/default"
+    src: "{{ dehydrated_nginxdir }}/sites-available/default"
+    dest: "{{ dehydrated_nginxdir }}/sites-enabled/default"
   when:
-    - dehydrated_nginx_enable|bool
-  run_once: "{{dehydrated_run_once}}"
+    - dehydrated_nginx_enable | bool
+  run_once: "{{ dehydrated_run_once }}"
   tags:
     - dehydrated
     - dehydrated_nginx

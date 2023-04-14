@@ -3,4 +3,4 @@
 - name: Run 'dehydrated' configuration
   ansible.builtin.include_tasks: dehydrated.yml
   when:
-    - dehydrated_domains|length > 0
+    - dehydrated_domains | length > 0

@@ -1,8 +1,11 @@
 ---
 
 - name: Checkout git repository for dehydrated
-  git: repo=https://github.com/lukas2511/dehydrated.git dest={{dehydrated_basedir}} update={{dehydrated_updategit}}
-  run_once: "{{dehydrated_run_once}}"
+  git: # noqa latest[git]
+    repo: https://github.com/lukas2511/dehydrated.git
+    dest: "{{ dehydrated_basedir }}"
+    update: "{{ dehydrated_updategit }}"
+  run_once: "{{ dehydrated_run_once }}"
   tags:
     - dehydrated
     - dehydrated-git
@@ -13,8 +16,8 @@
   apt:
     state: present
     pkg:
-    - dehydrated
-  run_once: "{{dehydrated_run_once}}"
+      - dehydrated
+  run_once: "{{ dehydrated_run_once }}"
   tags:
     - dehydrated
     - dehydrated-apt
@@ -26,8 +29,8 @@
   yum:
     state: present
     pkg:
-    - dehydrated
-  run_once: "{{dehydrated_run_once}}"
+      - dehydrated
+  run_once: "{{ dehydrated_run_once }}"
   tags:
     - dehydrated
     - dehydrated-yum
@@ -38,51 +41,51 @@
 - name: Create dehydrated directories
   file:
     state: directory
-    path: "{{item.path}}"
-    mode: "{{item.mode|default('0700')}}"
+    path: "{{ item.path }}"
+    mode: "{{ item.mode | default('0700') }}"
   with_items:
-    - { path: "{{dehydrated_etcdir}}", mode: "0711" }
-    - { path: "{{dehydrated_basedir}}", mode: "0711" }
-    - { path: "{{dehydrated_configdir}}" }
-    - { path: "{{dehydrated_certsdir}}" }
-    - { path: "{{dehydrated_certsdir}}/current" }
-    - { path: "{{dehydrated_accountsdir}}" }
-    - { path: "{{dehydrated_wellknown}}", mode: "0755" }
-  run_once: "{{dehydrated_run_once}}"
+    - { path: "{{ dehydrated_etcdir }}", mode: "0711" }
+    - { path: "{{ dehydrated_basedir }}", mode: "0711" }
+    - { path: "{{ dehydrated_configdir }}" }
+    - { path: "{{ dehydrated_certsdir }}" }
+    - { path: "{{ dehydrated_certsdir }}/current" }
+    - { path: "{{ dehydrated_accountsdir }}" }
+    - { path: "{{ dehydrated_wellknown }}", mode: "0755" }
+  run_once: "{{ dehydrated_run_once }}"
   tags:
     - dehydrated
     - dehydrated_dirs
 
 - name: Check presense of dh-params file
   stat:
-    path: "{{dehydrated_certsdir}}/dh{{dehydrated_keysize}}.pem"
-  check_mode: no
+    path: "{{ dehydrated_certsdir }}/dh{{ dehydrated_keysize }}.pem"
+  check_mode: false
   register: dehydrated_dhparams
 
 - name: Generate dh-params file
-  command: "openssl dhparam -out {{dehydrated_certsdir}}/dh{{dehydrated_keysize}}.pem {{dehydrated_keysize}}"
+  command: "openssl dhparam -out {{ dehydrated_certsdir }}/dh{{ dehydrated_keysize }}.pem {{ dehydrated_keysize }}"
   args:
-    chdir: "{{dehydrated_certsdir}}"
-    creates: "{{dehydrated_certsdir}}/dh{{dehydrated_keysize}}.pem"
+    chdir: "{{ dehydrated_certsdir }}"
+    creates: "{{ dehydrated_certsdir }}/dh{{ dehydrated_keysize }}.pem"
   async: 900
-  check_mode: no
+  check_mode: false
   poll: 0
   register: dhparams
   when:
-    - dehydrated_dhparams.stat.exists == false
+    - not dehydrated_dhparams.stat.exists
 
 - name: Template dehydrated config files
   template:
-    src: "{{item.src}}"
-    dest: "{{item.dest}}"
-    owner: "{{item.owner|default('root')}}"
-    group: "{{item.group|default('root')}}"
-    mode: "{{item.mode|default('0600')}}"
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner | default('root') }}"
+    group: "{{ item.group | default('root') }}"
+    mode: "{{ item.mode | default('0600') }}"
   with_items:
-    - { src: "config.j2", dest: "{{dehydrated_etcdir}}/config" }
-    - { src: "domains.txt.j2", dest: "{{dehydrated_domainstxt}}" }
-    - { src: "config2.j2", dest: "{{dehydrated_configdir}}/ansible.sh", mode: "0755" }
-  run_once: "{{dehydrated_run_once}}"
+    - { src: "config.j2", dest: "{{ dehydrated_etcdir }}/config" }
+    - { src: "domains.txt.j2", dest: "{{ dehydrated_domainstxt }}" }
+    - { src: "config2.j2", dest: "{{ dehydrated_configdir }}/ansible.sh", mode: "0755" }
+  run_once: "{{ dehydrated_run_once }}"
   tags:
     - dehydrated
     - dehydrated_domains.txt
@@ -90,19 +93,19 @@
 - name: Create local.sh config file
   file:
     state: touch
-    path: "{{dehydrated_configdir}}/local.sh"
+    path: "{{ dehydrated_configdir }}/local.sh"
     mode: "0755"
   changed_when: false
-  run_once: "{{dehydrated_run_once}}"
+  run_once: "{{ dehydrated_run_once }}"
   tags:
     - dehydrated
     - dehydrated_local
 
 - name: Create account key and accept terms (git version)
-  command: "{{dehydrated_basedir}}/dehydrated --register --accept-terms"
+  command: "{{ dehydrated_basedir }}/dehydrated --register --accept-terms"
   args:
-    creates: "{{dehydrated_accountsdir}}/*/account_key.pem"
-  run_once: "{{dehydrated_run_once}}"
+    creates: "{{ dehydrated_accountsdir }}/*/account_key.pem"
+  run_once: "{{ dehydrated_run_once }}"
   tags:
     - dehydrated
     - dehydrated-account
@@ -112,8 +115,8 @@
 - name: Create account key and accept terms (package version)
   command: "dehydrated --register --accept-terms"
   args:
-    creates: "{{dehydrated_accountsdir}}/*/account_key.pem"
-  run_once: "{{dehydrated_run_once}}"
+    creates: "{{ dehydrated_accountsdir }}/*/account_key.pem"
+  run_once: "{{ dehydrated_run_once }}"
   tags:
     - dehydrated
     - dehydrated-account
@@ -128,8 +131,8 @@
     group: "root"
     mode: "0755"
   when:
-    - dehydrated_cronjob|bool
-  run_once: "{{dehydrated_run_once}}"
+    - dehydrated_cronjob | bool
+  run_once: "{{ dehydrated_run_once }}"
   tags:
     - dehydrated
     - dehydrated_cronjob
@@ -137,9 +140,9 @@
 - name: Include 'apache' tasks
   include_tasks: apache.yml
   when:
-    - dehydrated_apache2|bool
+    - dehydrated_apache2 | bool
 
 - name: Include 'nginx' tasks
   include_tasks: nginx.yml
   when:
-    - dehydrated_nginx|bool
+    - dehydrated_nginx | bool
