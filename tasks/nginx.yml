@@ -1,7 +1,7 @@
 ---
 
 - name: Template nginx site-config
-  template:
+  ansible.builtin.template:
     src: "nginx-default.j2"
     dest: "{{dehydrated_nginxdir}}/sites-available/default"
     owner: root
@@ -15,7 +15,7 @@
     - dehydrated-nginx
 
 - name: Enable nginx default site
-  file:
+  ansible.builtin.file:
     state: "link"
     src: "{{dehydrated_nginxdir}}/sites-available/default"
     dest: "{{dehydrated_nginxdir}}/sites-enabled/default"
