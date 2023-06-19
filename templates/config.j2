@@ -10,17 +10,17 @@
 # /usr/share/doc/dehydrated/README.Debian                   #
 #############################################################
 
-CONFIG_D="{{dehydrated_configdir}}"
-BASEDIR="{{dehydrated_basedir}}"
-WELLKNOWN="{{dehydrated_wellknown}}"
-DOMAINS_TXT="{{dehydrated_domainstxt}}"
+CONFIG_D="{{ dehydrated_configdir }}"
+BASEDIR="{{ dehydrated_basedir }}"
+WELLKNOWN="{{ dehydrated_wellknown }}"
+DOMAINS_TXT="{{ dehydrated_domainstxt }}"
 
 create_privcert_pem() {
   echo "  $0 $@"
-
-  if [ "deploy_cert" = "$1" ] ; then
+ 
+  if [ "deploy_cert" = "$1" -a -e "dh2048.pem" ] ; then
     echo " + $0 Creating privcert.pem for haproxy / lighttpd..."
-    cat "$3" "$5" {{dehydrated_certsdir}}/dh{{dehydrated_keysize}}.pem > "${CERTDIR}/${domain}/privcert-${timestamp}.pem"
+    cat "$3" "$5" {{ dehydrated_certsdir }}/dh{{ dehydrated_keysize }}.pem > "${CERTDIR}/${domain}/privcert-${timestamp}.pem"
     ln -sf "privcert-${timestamp}.pem" "${CERTDIR}/${domain}/privcert.pem"
     ln -sf "${CERTDIR}/${domain}/privcert.pem" "${CERTDIR}/current/${domain}.pem"
   fi
