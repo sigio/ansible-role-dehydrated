@@ -3,13 +3,13 @@
 - name: Create apache2 config file
   template:
     src: "dehydrated.conf"
-    dest: "{{dehydrated_apache2dir}}/conf-available/dehydrated.conf"
+    dest: "{{ dehydrated_apache2dir }}/conf-available/dehydrated.conf"
     owner: root
     group: root
     mode: "0644"
   when:
-    - dehydrated_apache2|bool
-  run_once: "{{dehydrated_run_once}}"
+    - dehydrated_apache2 | bool
+  run_once: "{{ dehydrated_run_once }}"
   tags:
     - dehydrated
     - dehydrated-apache2
@@ -17,11 +17,11 @@
 - name: Enable apache2 config
   file:
     state: "link"
-    src: "{{dehydrated_apache2dir}}/conf-available/dehydrated.conf"
-    dest: "{{dehydrated_apache2dir}}/conf-enabled/dehydrated.conf"
+    src: "{{ dehydrated_apache2dir }}/conf-available/dehydrated.conf"
+    dest: "{{ dehydrated_apache2dir }}/conf-enabled/dehydrated.conf"
   when:
-    - dehydrated_apache2_enable|bool
-  run_once: "{{dehydrated_run_once}}"
+    - dehydrated_apache2_enable | bool
+  run_once: "{{ dehydrated_run_once }}"
   tags:
     - dehydrated
     - dehydrated_apache2

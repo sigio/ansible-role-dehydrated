@@ -4,9 +4,9 @@
 
 {{dehydrated_pre_cronjob}}
 
-{% if dehydrated_version == 'git' %}{{dehydrated_basedir}}/dehydrated{% else %}/usr/bin/dehydrated{% endif %} --cron > {{dehydrated_updatelog}} 2>&1 || ( \
+{% if dehydrated_version == 'git' %}{{dehydrated_basedir}}/dehydrated{% else %}/usr/bin/dehydrated{% endif %} --cron > {{dehydrated_updatelog}} 2>&1
 {% for service in dehydrated_reload_services %}
 service {{ service }} reload;
-{% endfor %} )
+{% endfor %}
 
 {{dehydrated_post_cronjob}}
