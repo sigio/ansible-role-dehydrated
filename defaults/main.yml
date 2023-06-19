@@ -1,24 +1,27 @@
 ---
 
 # Config settings for dehydrated
-dehydrated_basedir:         "/etc/dehydrated"
+# dehydrated_version: "git" or "package"
+dehydrated_version:         "package"
+dehydrated_basedir:         "/var/lib/dehydrated"
+dehydrated_etcdir:          "/etc/dehydrated"
 dehydrated_challengetype:   "http-01"
-dehydrated_ca_url:          "https://acme-v01.api.letsencrypt.org/directory"
-dehydrated_ca_terms:        "https://acme-v01.api.letsencrypt.org/terms"
-dehydrated_configdir:       "{{dehydrated_basedir}}/config.d"
-dehydrated_domainstxt:      "{{dehydrated_basedir}}/domains.txt"
-dehydrated_certsdir:        "{{dehydrated_basedir}}/certs"
-dehydrated_accountsdir:     "{{dehydrated_basedir}}/accounts"
-dehydrated_wellknown:       "/var/www/dehydrated"
+dehydrated_ca_url:          "https://acme-v02.api.letsencrypt.org/directory"
+dehydrated_ca_terms:        "https://acme-v02.api.letsencrypt.org/terms"
+dehydrated_configdir:       "{{ dehydrated_etcdir }}/conf.d"
+dehydrated_domainstxt:      "{{ dehydrated_etcdir }}/domains.txt"
+dehydrated_certsdir:        "{{ dehydrated_basedir }}/certs"
+dehydrated_accountsdir:     "{{ dehydrated_basedir }}/accounts"
+dehydrated_wellknown:       "{{ dehydrated_basedir }}/acme-challenges"
 dehydrated_keysize:         "2048"
 dehydrated_renewdays:       "30"
 dehydrated_privkeyrenew:    "yes"
 dehydrated_privkeyrollover: "no"
 dehydrated_keyalgo:         "rsa"
 dehydrated_contactmail:     ""
-dehydrated_lockfile:        "{{dehydrated_basedir}}/lock"
+dehydrated_lockfile:        "{{ dehydrated_basedir }}/lock"
 dehydrated_ocspstaple:      "no"
-dehydrated_run_once:        "false"
+dehydrated_run_once:        false
 dehydrated_updatelog:       "/var/log/dehydrated.log"
 
 # Update git checkout
@@ -38,3 +41,15 @@ dehydrated_apache2:         "false"
 # And enable this config
 dehydrated_apache2_enable:  "false"
 
+# Nginx support
+dehydrated_nginxdir:        "/etc/nginx"
+dehydrated_nginx:           "false"
+dehydrated_nginx_enable:    "false"
+
+# List of certs to request, and anternative names on the same line
+dehydrated_domains: []
+
+# Commands to run before and after the dehydrated cronjob,
+# for example, open up port 80 in the firewall
+dehydrated_pre_cronjob:     ""
+dehydrated_post_cronjob:    ""

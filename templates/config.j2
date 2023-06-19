@@ -1,34 +1,29 @@
 # {{ ansible_managed }}
+#############################################################
+# This is the main config file for dehydrated               #
+#                                                           #
+# This is the default configuration for the Debian package. #
+# To see a more comprehensive example, see                  #
+# /usr/share/doc/dehydrated/examples/config                 #
+#                                                           #
+# For details please read:                                  #
+# /usr/share/doc/dehydrated/README.Debian                   #
+#############################################################
 
-CA="{{dehydrated_ca_url}}"
-CA_TERMS="{{dehydrated_ca_terms}}"
-CHALLENGETYPE="{{dehydrated_challengetype}}"
-BASEDIR="{{dehydrated_basedir}}"
-CONFIG_D="{{dehydrated_configdir}}"
-DOMAINS_TXT="{{dehydrated_domainstxt}}"
-CERTDIR="{{dehydrated_certsdir}}"
-ACCOUNTDIR="{{dehydrated_accountsdir}}"
-WELLKNOWN="{{dehydrated_wellknown}}"
-KEYSIZE="{{dehydrated_keysize}}"
-HOOK_CHAIN="no"
-RENEW_DAYS="{{dehydrated_renewdays}}"
-PRIVATE_KEY_RENEW="{{dehydrated_privkeyrenew}}"
-PRIVATE_KEY_ROLLOVER="{{dehydrated_privkeyrollover}}"
-KEY_ALGO="{{dehydrated_keyalgo}}"
-CONTACT_EMAIL="{{dehydrated_contactmail}}"
-LOCKFILE="{{dehydrated_lockfile}}"
-OCSP_MUST_STAPLE="{{dehydrated_ocspstaple}}"
+CONFIG_D="{{ dehydrated_configdir }}"
+BASEDIR="{{ dehydrated_basedir }}"
+WELLKNOWN="{{ dehydrated_wellknown }}"
+DOMAINS_TXT="{{ dehydrated_domainstxt }}"
 
 create_privcert_pem() {
   echo "  $0 $@"
  
   if [ "deploy_cert" = "$1" -a -e "dh2048.pem" ] ; then
     echo " + $0 Creating privcert.pem for haproxy / lighttpd..."
-    cat "$3" "$5" dh2048.pem > "${CERTDIR}/${domain}/privcert-${timestamp}.pem"
+    cat "$3" "$5" {{ dehydrated_certsdir }}/dh{{ dehydrated_keysize }}.pem > "${CERTDIR}/${domain}/privcert-${timestamp}.pem"
     ln -sf "privcert-${timestamp}.pem" "${CERTDIR}/${domain}/privcert.pem"
     ln -sf "${CERTDIR}/${domain}/privcert.pem" "${CERTDIR}/current/${domain}.pem"
   fi
 }
- 
-HOOK=create_privcert_pem
 
+HOOK=create_privcert_pem
